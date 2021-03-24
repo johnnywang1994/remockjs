@@ -6,7 +6,7 @@ ReMock.js is a simulation data generator which is reproduced from [Mock.js](http
 
 * Parsing: Parse as Native javascript string.
 
-* Support: add Japanese & Korea in random words & strings.
+* Support: add Japanese & Korea in random words & strings.(not support for `ActiveXObject`)
 
 * Bundle: use rollup bundler for production
 
@@ -76,6 +76,12 @@ cancelMock();
 
 ### mockRequest(method, url, responseData)
 mock target method & url with responseData
+
+  - method: `string`
+  - url: `string`
+  - responseData: `anything can be pass in mock()`
+
+> Be aware that currently the `url` only supports pure string, `regexp` will not take effect.
 
 ### Random
 `Random` is an object which contains all mock methods for you.

@@ -8,7 +8,7 @@ ReMock.js is a simulation data generator which is reproduced from [Mock.js](http
 
 * Support: add Japanese & Korea in random words & strings.(not support for `ActiveXObject`)
 
-* Bundle: use rollup bundler for production
+* Bundle: use rollup bundler for production, you can use as `umd` module.
 
 
 ## Install
@@ -601,12 +601,12 @@ create auto increment method
     * default: 1
 
 ```js
-import { random } from 'remockjs';
+import { Random } from 'remockjs';
 
 const mockData = mock({
   'list|3-5': [
     {
-      id: random.increment(2),
+      id: Random.increment(2),
     },
   ],
 })

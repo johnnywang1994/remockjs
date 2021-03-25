@@ -13,7 +13,7 @@ const { natural } = basicMap;
 const { pick, pickMap } = Utils;
 const idKeyMap = new Map(); // [id, rateMap]
 const rmaxMap = new Map(); // [id, rmax]
-let countCache = null; // null: not start
+const countCache = []; // null: not start
 
 export const dataTypeMap = {
   ...basicMap,
@@ -88,8 +88,9 @@ function normalKeyHandler(params, value, output) {
   // -- number value
   else if (typeof value === 'number') {
     if (nextCount) {
-      newValue = nextCount(countCache || value);
-      countCache = newValue;
+      const cacheIndex = countCache.length - 1;
+      newValue = nextCount(countCache[cacheIndex] || value);
+      countCache[cacheIndex] = newValue;
     } else {
       newValue = natural(min, max);
     }
@@ -97,6 +98,7 @@ function normalKeyHandler(params, value, output) {
   // -- array value
   else if (Array.isArray(value)) {
     newValue = [];
+    countCache.push(null);
     for (let i = 0; i < natural(min, max); ++i) {
       const cpick = pick(value);
       newValue.push(
@@ -105,10 +107,10 @@ function normalKeyHandler(params, value, output) {
           : parseValueSchema(cpick)
       )
     }
+    countCache.pop();
     if (max == 1) {
       newValue = newValue[0];
     }
-    countCache = null;
   }
   // -- not handled value(object, boolean, others...)
   else {

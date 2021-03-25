@@ -2818,7 +2818,7 @@
 
   var rmaxMap = new Map(); // [id, rmax]
 
-  var countCache = null; // null: not start
+  var countCache = []; // null: not start
 
   var dataTypeMap = _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, basicMap), dateMap), imageMap), colorMap), textMap), nameMap), webMap), addressMap), miscMap);
 
@@ -2900,25 +2900,27 @@
     } // -- number value
     else if (typeof value === 'number') {
         if (nextCount) {
-          newValue = nextCount(countCache || value);
-          countCache = newValue;
+          var cacheIndex = countCache.length - 1;
+          newValue = nextCount(countCache[cacheIndex] || value);
+          countCache[cacheIndex] = newValue;
         } else {
           newValue = natural(min, max);
         }
       } // -- array value
       else if (Array.isArray(value)) {
           newValue = [];
+          countCache.push(null);
 
           for (var i = 0; i < natural(min, max); ++i) {
             var cpick = pick(value);
             newValue.push(_typeof(cpick) === 'object' ? createData(cpick) : parseValueSchema(cpick));
           }
 
+          countCache.pop();
+
           if (max == 1) {
             newValue = newValue[0];
           }
-
-          countCache = null;
         } // -- not handled value(object, boolean, others...)
         else {
             newValue = createData(value);

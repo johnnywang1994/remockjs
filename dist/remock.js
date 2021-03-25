@@ -243,7 +243,7 @@
     return Math.random() > 0.5;
   }
 
-  function natural(min, max) {
+  function natural$4(min, max) {
     if (max) {
       max = parseInt(max || 9007199254740992, 10); // 2^53
 
@@ -269,7 +269,7 @@
     return Math.round(Math.random() * (max - min)) + min;
   }
 
-  function character(pool) {
+  function character$1(pool) {
     var type = pool || 'default'; // multi pool
 
     if (Array.isArray(pool)) {
@@ -279,7 +279,7 @@
     }
 
     pool = CH_POOL[('' + type).toLowerCase()] || pool;
-    return pool.charAt(natural(pool.length - 1));
+    return pool.charAt(natural$4(pool.length - 1));
   }
 
   function _float(min, max, dmin, dmax) {
@@ -311,7 +311,7 @@
     return parseFloat(ret);
   }
 
-  function string(pool, min, max) {
+  function string$1(pool, min, max) {
     var len;
     var text = ''; // multi pool
 
@@ -323,11 +323,11 @@
 
     var paramsMap = {
       0: function _() {
-        len = natural(3, 7);
+        len = natural$4(3, 7);
       },
       1: function _() {
         if (typeof pool === 'string') {
-          len = natural(3, 7);
+          len = natural$4(3, 7);
         } else {
           len = pool;
           pool = undefined;
@@ -338,18 +338,18 @@
           len = min;
         } else {
           // ( min, max )
-          len = natural(pool, min);
+          len = natural$4(pool, min);
           pool = undefined;
         }
       },
       3: function _() {
-        len = natural(min, max);
+        len = natural$4(min, max);
       }
     };
     paramsMap[arguments.length]();
 
     for (var i = 0; i < len; i++) {
-      text += character(pool);
+      text += character$1(pool);
     }
 
     return text;
@@ -357,11 +357,11 @@
 
   var basicMap = {
     "boolean": _boolean,
-    natural: natural,
+    natural: natural$4,
     integer: integer,
-    character: character,
+    character: character$1,
     "float": _float,
-    string: string
+    string: string$1
   };
 
   var patternLetters = {
@@ -466,7 +466,7 @@
     return new Date(Math.random() * (max.getTime() - min.getTime()));
   }
 
-  function date(format, min, max) {
+  function date$1(format, min, max) {
     format = format || 'yyyy-MM-dd';
 
     if (max === undefined) {
@@ -517,7 +517,7 @@
   }
 
   var dateMap = {
-    date: date,
+    date: date$1,
     time: time,
     datetime: datetime,
     now: now
@@ -743,16 +743,16 @@
     hsv: hsv
   };
 
-  var natural$1 = basicMap.natural;
+  var natural$3 = basicMap.natural;
 
-  function capitalize(word) {
+  function capitalize$1(word) {
     return (word + '').charAt(0).toUpperCase() + (word + '').substr(1);
   }
 
-  function range(defaultMin, defaultMax, min, max) {
-    return min === undefined ? natural$1(defaultMin, defaultMax) : // ()
+  function range$1(defaultMin, defaultMax, min, max) {
+    return min === undefined ? natural$3(defaultMin, defaultMax) : // ()
     max === undefined ? parseInt(min, 10) : // ( len )
-    natural$1(min, max); // ( min, max )
+    natural$3(min, max); // ( min, max )
   }
 
   function shuffle(arr, min, max) {
@@ -762,7 +762,7 @@
     var index = 0;
 
     while (old.length) {
-      index = natural$1(0, old.length - 1);
+      index = natural$3(0, old.length - 1);
       result.push(old[index]);
       old.splice(index, 1);
     }
@@ -770,10 +770,10 @@
     if (arguments.length < 2) return result;
     max = parseInt(max || min, 10);
     min = parseInt(min, 10);
-    return result.slice(0, natural$1(min, max));
+    return result.slice(0, natural$3(min, max));
   }
 
-  function pick(arr, min, max) {
+  function pick$5(arr, min, max) {
     // pick( item1, item2 ... )
     if (!Array.isArray(arr)) {
       arr = [].slice.call(arguments);
@@ -786,11 +786,11 @@
       if (max === undefined) max = min;
     }
 
-    if (min === 1 && max === 1) return arr[natural$1(0, arr.length - 1)];
+    if (min === 1 && max === 1) return arr[natural$3(0, arr.length - 1)];
     return shuffle(arr, min, max);
   }
 
-  function pickMap(setBox) {
+  function pickMap$1(setBox) {
     var rateMap = _toConsumableArray(setBox).reduce(function (total, item) {
       total.max += Number(item.rmin);
       total.map.set(item, total.max);
@@ -830,18 +830,18 @@
     };
   }
 
-  var Utils = {
-    capitalize: capitalize,
-    range: range,
-    pick: pick,
-    pickMap: pickMap
+  var Utils$1 = {
+    capitalize: capitalize$1,
+    range: range$1,
+    pick: pick$5,
+    pickMap: pickMap$1
   };
 
-  var character$1 = basicMap.character;
-  var capitalize$1 = Utils.capitalize,
-      range$1 = Utils.range;
+  var character = basicMap.character;
+  var capitalize = Utils$1.capitalize,
+      range = Utils$1.range;
 
-  function word(pool, min, max) {
+  function word$1(pool, min, max) {
     // (min, max)
     if (typeof pool === 'number') {
       max = min;
@@ -849,11 +849,11 @@
       pool = '';
     }
 
-    var len = range$1(3, 10, min, max);
+    var len = range(3, 10, min, max);
     var result = '';
 
     for (var i = 0; i < len; i++) {
-      result += character$1(pool || 'lower');
+      result += character(pool || 'lower');
     }
 
     return result;
@@ -867,14 +867,14 @@
       pool = '';
     }
 
-    var len = range$1(8, 14, min, max);
+    var len = range(8, 14, min, max);
     var result = [];
 
     for (var i = 0; i < len; i++) {
-      result.push(word(pool));
+      result.push(word$1(pool));
     }
 
-    return capitalize$1(result.join(' ')) + '.';
+    return capitalize(result.join(' ')) + '.';
   }
 
   function paragraph(pool, min, max) {
@@ -885,7 +885,7 @@
       pool = '';
     }
 
-    var len = range$1(3, 7, min, max);
+    var len = range(3, 7, min, max);
     var result = [];
 
     for (var i = 0; i < len; i++) {
@@ -903,24 +903,24 @@
       pool = '';
     }
 
-    var len = range$1(3, 7, min, max);
+    var len = range(3, 7, min, max);
     var result = [];
 
     for (var i = 0; i < len; i++) {
-      result.push(capitalize$1(word(pool)));
+      result.push(capitalize(word$1(pool)));
     }
 
     return result.join(' ');
   }
 
   var textMap = {
-    word: word,
+    word: word$1,
     sentence: sentence,
     paragraph: paragraph,
     title: title
   };
 
-  var pick$1 = Utils.pick;
+  var pick$4 = Utils$1.pick;
   var EN_FIRST = [// male
   'James', 'John', 'Robert', 'Michael', 'William', 'David', 'Richard', 'Charles', 'Joseph', 'Thomas', 'Christopher', 'Daniel', 'Paul', 'Mark', 'Donald', 'George', 'Kenneth', 'Steven', 'Edward', 'Brian', 'Ronald', 'Anthony', 'Kevin', 'Jason', 'Matthew', 'Gary', 'Timothy', 'Jose', 'Larry', 'Jeffrey', 'Frank', 'Scott', 'Eric'].concat([// female
   'Mary', 'Patricia', 'Linda', 'Barbara', 'Elizabeth', 'Jennifer', 'Maria', 'Susan', 'Margaret', 'Dorothy', 'Lisa', 'Nancy', 'Karen', 'Betty', 'Helen', 'Sandra', 'Donna', 'Carol', 'Ruth', 'Sharon', 'Michelle', 'Laura', 'Sarah', 'Kimberly', 'Deborah', 'Jessica', 'Shirley', 'Cynthia', 'Angela', 'Melissa', 'Brenda', 'Amy', 'Anna']);
@@ -950,12 +950,12 @@
 
   function first() {
     var lang = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'en';
-    return pick$1(FIRST_MAP[lang]);
+    return pick$4(FIRST_MAP[lang]);
   }
 
   function last() {
     var lang = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'en';
-    return pick$1(LAST_MAP[lang]);
+    return pick$4(LAST_MAP[lang]);
   }
 
   function name() {
@@ -971,29 +971,29 @@
   };
 
   var natural$2 = basicMap.natural;
-  var word$1 = textMap.word;
-  var pick$2 = Utils.pick;
+  var word = textMap.word;
+  var pick$3 = Utils$1.pick;
 
   function tld() {
-    return pick$2(('com net org edu gov int mil cn tw ' + 'tel biz cc tv info name hk mobi asia cd travel pro museum coop aero ' + 'ad ae af ag ai al am an ao aq ar as at au aw az ba bb bd be bf bg bh bi bj bm bn bo br bs bt bv bw by bz ca cc cf cg ch ci ck cl cm cn co cq cr cu cv cx cy cz de dj dk dm do dz ec ee eg eh es et ev fi fj fk fm fo fr ga gb gd ge gf gh gi gl gm gn gp gr gt gu gw gy hk hm hn hr ht hu id ie il in io iq ir is it jm jo jp ke kg kh ki km kn kp kr kw ky kz la lb lc li lk lr ls lt lu lv ly ma mc md mg mh ml mm mn mo mp mq mr ms mt mv mw mx my mz na nc ne nf ng ni nl no np nr nt nu nz om qa pa pe pf pg ph pk pl pm pn pr pt pw py re ro ru rw sa sb sc sd se sg sh si sj sk sl sm sn so sr st su sy sz tc td tf tg th tj tk tm tn to tp tr tt tv tw tz ua ug uk us uy va vc ve vg vn vu wf ws ye yu za zm zr zw').split(' '));
+    return pick$3(('com net org edu gov int mil cn tw ' + 'tel biz cc tv info name hk mobi asia cd travel pro museum coop aero ' + 'ad ae af ag ai al am an ao aq ar as at au aw az ba bb bd be bf bg bh bi bj bm bn bo br bs bt bv bw by bz ca cc cf cg ch ci ck cl cm cn co cq cr cu cv cx cy cz de dj dk dm do dz ec ee eg eh es et ev fi fj fk fm fo fr ga gb gd ge gf gh gi gl gm gn gp gr gt gu gw gy hk hm hn hr ht hu id ie il in io iq ir is it jm jo jp ke kg kh ki km kn kp kr kw ky kz la lb lc li lk lr ls lt lu lv ly ma mc md mg mh ml mm mn mo mp mq mr ms mt mv mw mx my mz na nc ne nf ng ni nl no np nr nt nu nz om qa pa pe pf pg ph pk pl pm pn pr pt pw py re ro ru rw sa sb sc sd se sg sh si sj sk sl sm sn so sr st su sy sz tc td tf tg th tj tk tm tn to tp tr tt tv tw tz ua ug uk us uy va vc ve vg vn vu wf ws ye yu za zm zr zw').split(' '));
   }
 
   function domain(ctld) {
-    return word$1() + '.' + (ctld || tld());
+    return word() + '.' + (ctld || tld());
   }
 
   function protocol() {
-    return pick$2('http https ftp gopher mailto mid cid news nntp prospero telnet rlogin tn3270 wais'.split(' '));
+    return pick$3('http https ftp gopher mailto mid cid news nntp prospero telnet rlogin tn3270 wais'.split(' '));
   }
 
   function url(protoc, host) {
     return (protoc || protocol()) + '://' + ( // protocol?
     host || domain()) + // host?
-    '/' + word$1();
+    '/' + word();
   }
 
   function email(cdomain, pool, min, max) {
-    return word$1(pool, min, max) + '@' + (cdomain || domain());
+    return word(pool, min, max) + '@' + (cdomain || domain());
   }
 
   function ip() {
@@ -2614,8 +2614,8 @@
     return result;
   }();
 
-  var natural$3 = basicMap.natural;
-  var pick$3 = Utils.pick;
+  var natural$1 = basicMap.natural;
+  var pick$2 = Utils$1.pick;
   var typeMap = {
     ch: {
       dict: C_DICT,
@@ -2633,22 +2633,22 @@
 
   function region() {
     var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'ch';
-    return pick$3(typeMap[type].region);
+    return pick$2(typeMap[type].region);
   }
 
   function province() {
     var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'ch';
-    return pick$3(typeMap[type].dict).name;
+    return pick$2(typeMap[type].dict).name;
   }
 
   function city() {
     var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'ch';
     var prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
     var dict = typeMap[type].dict;
-    var province = pick$3(dict) || {
+    var province = pick$2(dict) || {
       children: {}
     };
-    var city = pick$3(province.children) || {
+    var city = pick$2(province.children) || {
       name: '-'
     };
     return prefix ? [province.name, city.name].join(' ') : city.name;
@@ -2658,9 +2658,9 @@
     var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'ch';
     var prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
     var dict = typeMap[type].dict;
-    var province = pick$3(dict);
-    var city = pick$3(province.children);
-    var county = pick$3(city.children) || {
+    var province = pick$2(dict);
+    var city = pick$2(province.children);
+    var county = pick$2(city.children) || {
       name: '-'
     };
     return prefix ? [province.name, city.name, county.name].join(' ') : county.name;
@@ -2670,7 +2670,7 @@
     var zip = '';
 
     for (var i = 0; i < (len || 6); i++) {
-      zip += natural$3(0, 9);
+      zip += natural$1(0, 9);
     }
 
     return zip;
@@ -2684,9 +2684,9 @@
     zip: zip
   };
 
-  var string$1 = basicMap.string;
-  var date$1 = dateMap.date;
-  var pick$4 = Utils.pick;
+  var string = basicMap.string;
+  var date = dateMap.date;
+  var pick$1 = Utils$1.pick;
   /*
     随机生成一个 GUID。
     http://www.broofa.com/2008/09/javascript-uuid-function/
@@ -2716,7 +2716,7 @@
   var GUID_POOL = 'abcdefABCDEF1234567890';
 
   function guid() {
-    var guid = string$1(GUID_POOL, 8) + '-' + string$1(GUID_POOL, 4) + '-' + string$1(GUID_POOL, 4) + '-' + string$1(GUID_POOL, 4) + '-' + string$1(GUID_POOL, 12);
+    var guid = string(GUID_POOL, 8) + '-' + string(GUID_POOL, 4) + '-' + string(GUID_POOL, 4) + '-' + string(GUID_POOL, 4) + '-' + string(GUID_POOL, 12);
     return guid;
   }
 
@@ -2743,7 +2743,7 @@
     var last = ['1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'];
     var id;
     var sum = 0;
-    id = pick$4(C_DICT).code + date$1('yyyyMMdd') + string$1('number', 3);
+    id = pick$1(C_DICT).code + date('yyyyMMdd') + string('number', 3);
 
     for (var i = 0; i < id.length; i++) {
       sum += id[i] * rank[i];
@@ -2786,9 +2786,9 @@
     var ssn;
 
     if (!ssnFour) {
-      ssn = string$1(ssn_pool, 3) + dash + string$1(ssn_pool, 2) + dash + string$1(ssn_pool, 4);
+      ssn = string(ssn_pool, 3) + dash + string(ssn_pool, 2) + dash + string(ssn_pool, 4);
     } else {
-      ssn = string$1(ssn_pool, 4);
+      ssn = string(ssn_pool, 4);
     }
 
     return ssn;
@@ -2811,9 +2811,9 @@
     increment: increment
   };
 
-  var natural$4 = basicMap.natural;
-  var pick$5 = Utils.pick,
-      pickMap$1 = Utils.pickMap;
+  var natural = basicMap.natural;
+  var pick = Utils$1.pick,
+      pickMap = Utils$1.pickMap;
   var idKeyMap = new Map(); // [id, rateMap]
 
   var rmaxMap = new Map(); // [id, rmax]
@@ -2896,21 +2896,21 @@
 
     if (typeof value === 'string') {
       var unitValue = parseValueSchema(value);
-      newValue = unitValue.repeat(natural$4(min, max));
+      newValue = unitValue.repeat(natural(min, max));
     } // -- number value
     else if (typeof value === 'number') {
         if (nextCount) {
           newValue = nextCount(countCache || value);
           countCache = newValue;
         } else {
-          newValue = natural$4(min, max);
+          newValue = natural(min, max);
         }
       } // -- array value
       else if (Array.isArray(value)) {
           newValue = [];
 
-          for (var i = 0; i < natural$4(min, max); ++i) {
-            var cpick = pick$5(value);
+          for (var i = 0; i < natural(min, max); ++i) {
+            var cpick = pick(value);
             newValue.push(_typeof(cpick) === 'object' ? createData(cpick) : parseValueSchema(cpick));
           }
 
@@ -3014,7 +3014,7 @@
             key = _step$value[0],
             rateMap = _step$value[1];
 
-        var picker = pickMap$1(rateMap);
+        var picker = pickMap(rateMap);
         var rmax = rmaxMap.get(key);
 
         var _picker = picker({
@@ -3145,7 +3145,7 @@
 
   /* eslint-disable no-empty */
 
-  function extend(to, from, thisArgs) {
+  function extend$1(to, from, thisArgs) {
     Object.keys(from).forEach(function (key) {
       var val = from[key];
 
@@ -3172,13 +3172,13 @@
     mock.dispatchEvent(new CustomEvent(event.type));
   }
 
-  function syncNativeResponse(xhr, mock) {
+  function syncNativeResponse$1(xhr, mock) {
     for (var i = 0; i < XHR_EVENTS.length; ++i) {
       xhr.addEventListener(XHR_EVENTS[i], nativeResponseHandler.bind(mock));
     }
   }
 
-  function syncNativeRequest(xhr, mock) {
+  function syncNativeRequest$1(xhr, mock) {
     var nativeProLen = XHR_REQUEST_PROPERTIES.length;
 
     for (var j = 0; j < nativeProLen; ++j) {
@@ -3188,21 +3188,21 @@
     }
   }
 
-  function transformResponse(item, options) {
+  function transformResponse$1(item, options) {
     return typeof item === 'function' ? item(options) : mock(item);
   }
 
-  var Utils$1 = {
-    extend: extend,
-    syncNativeResponse: syncNativeResponse,
-    syncNativeRequest: syncNativeRequest,
-    transformResponse: transformResponse
+  var Utils = {
+    extend: extend$1,
+    syncNativeResponse: syncNativeResponse$1,
+    syncNativeRequest: syncNativeRequest$1,
+    transformResponse: transformResponse$1
   };
 
-  var extend$1 = Utils$1.extend,
-      syncNativeResponse$1 = Utils$1.syncNativeResponse,
-      syncNativeRequest$1 = Utils$1.syncNativeRequest,
-      transformResponse$1 = Utils$1.transformResponse;
+  var extend = Utils.extend,
+      syncNativeResponse = Utils.syncNativeResponse,
+      syncNativeRequest = Utils.syncNativeRequest,
+      transformResponse = Utils.transformResponse;
 
   function MockXMLHttpRequest(options) {
     var mock = this;
@@ -3210,8 +3210,7 @@
       events: {},
       requestHeaders: {},
       responseHeaders: {}
-    };
-    mock._readyState = MockXMLHttpRequest.UNSENT; // request
+    }; // request
 
     mock.timeout = options.timeout || 0;
     mock.withCredentials = options.withCredentials || false;
@@ -3230,24 +3229,26 @@
     mock.response = null;
     mock.responseText = '';
     mock.responseXML = null;
+    var readyState = MockXMLHttpRequest.UNSENT;
+    Object.defineProperty(mock, 'readyState', {
+      get: function get() {
+        return readyState;
+      },
+      set: function set(newState) {
+        readyState = newState;
+        mock.dispatchEvent(new CustomEvent('readystatechange'));
+      }
+    });
   }
 
-  extend$1(MockXMLHttpRequest.prototype, XHR_STATES); // -- Request --
+  extend(MockXMLHttpRequest, XHR_STATES);
+  extend(MockXMLHttpRequest.prototype, XHR_STATES); // -- Request --
 
-  extend$1(MockXMLHttpRequest.prototype, {
-    get readyState() {
-      return this._readyState;
-    },
-
-    set readyState(newVal) {
-      this._readyState = newVal;
-      this.dispatchEvent(new CustomEvent('readystatechange'));
-    },
-
+  extend(MockXMLHttpRequest.prototype, {
     open: function open(method, url, isAsync) {
       var mock = this;
       isAsync = typeof isAsync === 'boolean' ? isAsync : true;
-      extend$1(mock.custom, {
+      extend(mock.custom, {
         method: method,
         url: url,
         isAsync: isAsync,
@@ -3269,10 +3270,10 @@
       var xhr = createNativeXHR();
       mock.custom.xhr = xhr; // pre define response data for mock
 
-      syncNativeResponse$1(xhr, mock);
+      syncNativeResponse(xhr, mock);
       xhr.open(method, url, isAsync); // set request data for mock
 
-      syncNativeRequest$1(xhr, mock);
+      syncNativeRequest(xhr, mock);
     },
     setRequestHeader: function setRequestHeader(name, value) {
       var mock = this; // native
@@ -3314,7 +3315,7 @@
         mock.dispatchEvent(new CustomEvent('loadend'));
       };
 
-      compiler = transformResponse$1(mock.custom.template, mock.custom.options); // promise
+      compiler = transformResponse(mock.custom.template, mock.custom.options); // promise
 
       if (typeof compiler.then === 'function') {
         compiler.then(function (data) {
@@ -3348,7 +3349,7 @@
     }
   }); // -- Response --
 
-  extend$1(MockXMLHttpRequest.prototype, {
+  extend(MockXMLHttpRequest.prototype, {
     getResponseHeader: function getResponseHeader(name) {
       var mock = this; // native
 
@@ -3379,7 +3380,7 @@
     }
   }); // -- Events --
 
-  extend$1(MockXMLHttpRequest.prototype, {
+  extend(MockXMLHttpRequest.prototype, {
     addEventListener: function addEventListener(type, handler) {
       var events = this.custom.events;
       if (!events[type]) events[type] = [];

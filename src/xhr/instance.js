@@ -10,7 +10,6 @@ function MockXMLHttpRequest(options) {
     requestHeaders: {},
     responseHeaders: {},
   };
-  mock._readyState = MockXMLHttpRequest.UNSENT;
   // request
   mock.timeout = options.timeout || 0;
   mock.withCredentials = options.withCredentials || false;
@@ -24,6 +23,17 @@ function MockXMLHttpRequest(options) {
   mock.response = null;
   mock.responseText = '';
   mock.responseXML = null;
+
+  let readyState = MockXMLHttpRequest.UNSENT;
+  Object.defineProperty(mock, 'readyState', {
+    get() {
+      return readyState;
+    },
+    set(newState) {
+      readyState = newState;
+      mock.dispatchEvent(new CustomEvent('readystatechange'));
+    },
+  });
 }
 
 extend(MockXMLHttpRequest, XHR_STATES);
@@ -31,13 +41,6 @@ extend(MockXMLHttpRequest.prototype, XHR_STATES);
 
 // -- Request --
 extend(MockXMLHttpRequest.prototype, {
-  get readyState() {
-    return this._readyState;
-  },
-  set readyState(newVal) {
-    this._readyState = newVal;
-    this.dispatchEvent(new CustomEvent('readystatechange'));
-  },
   open(method, url, isAsync) {
     const mock = this;
     isAsync = typeof isAsync === 'boolean' ? isAsync : true;

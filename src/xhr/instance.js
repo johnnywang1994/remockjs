@@ -26,6 +26,7 @@ function MockXMLHttpRequest(options) {
   mock.responseXML = null;
 }
 
+extend(MockXMLHttpRequest, XHR_STATES);
 extend(MockXMLHttpRequest.prototype, XHR_STATES);
 
 // -- Request --

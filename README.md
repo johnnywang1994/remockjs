@@ -83,6 +83,36 @@ mock target method & url with responseData
 
 > Be aware that currently the `url` only supports pure string, `regexp` will not take effect.
 
+#### responseData
+if responseData can be an function or return promise:
+
+but if using `function` or `promise`, you should mock the data yourself by `mock`.
+
+```js
+import { mock, mockRequest } from 'remockjs';
+
+// function response
+mockRequest('get', '/api/test', function() {
+  const data = {
+    name: '@name()',
+  };
+  data.age = '@natural(30)';
+  return mock(data);
+})
+
+// promise response
+mockRequest('get', '/api/test', function() {
+  return new Promise((resolve) => {
+    const data = {
+      name: '@name()',
+    };
+    data.age = '@natural(30)';
+    resolve(mock(data));
+  });
+})
+```
+
+
 ### Random
 `Random` is an object which contains all mock methods for you.
 
@@ -225,14 +255,14 @@ create a character from pool.
     * type: `string` or `array`
     * default: `default`
     * allowed pool: `lower`, `upper`, `number`, `symbol`, `chinese`, `chinese-tradition`, `hiragana`, `katakana`, `korea`
-    * mixed allowed pool:
-      `en` => [`lower`, `upper`]
-      `ch` => [`chinese`]
-      `tw` => [`chinese-tradition`]
-      `jp` => [`hiragana`, `katakana`]
-      `kr` => [`korea`]
-      `alpha` => [`lower`, `upper`] same as `en`
-      `default` => [`lower`, `upper`, `number`, `symbol`]
+    * mixed allowed pool:   
+      `en` => [`lower`, `upper`]  
+      `ch` => [`chinese`]   
+      `tw` => [`chinese-tradition`]   
+      `jp` => [`hiragana`, `katakana`]    
+      `kr` => [`korea`]   
+      `alpha` => [`lower`, `upper`] same as `en`    
+      `default` => [`lower`, `upper`, `number`, `symbol`]   
 
 > if the pool is not defined, will use `default` pool, if the pool is defined but not allowed in above, the pool text itself will become the pool string to use.
 

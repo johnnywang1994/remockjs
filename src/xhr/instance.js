@@ -3,7 +3,7 @@ import Utils from './utils';
 
 const { extend, syncNativeResponse, syncNativeRequest, transformResponse } = Utils;
 
-function MockXMLHttpRequest(options) {
+function MockXMLHttpRequest(options = {}) {
   const mock = this;
   mock.custom = {
     events: {},

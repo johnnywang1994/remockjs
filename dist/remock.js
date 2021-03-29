@@ -3206,7 +3206,8 @@
       syncNativeRequest = Utils.syncNativeRequest,
       transformResponse = Utils.transformResponse;
 
-  function MockXMLHttpRequest(options) {
+  function MockXMLHttpRequest() {
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var mock = this;
     mock.custom = {
       events: {},

@@ -17,6 +17,34 @@ ReMock.js is a simulation data generator which is reproduced from [Mock.js](http
 $ npm install remockjs
 ```
 
+or by CDN
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/remockjs@0.0.7/dist/remock.min.js"></script>
+```
+
+```js
+// CDN
+const { mockXHR, mockRequest } = window.ReMock;
+
+mockXHR();
+
+// mock request
+mockRequest('get', '/api/test', {
+  data: {
+    msg: '@string()'
+  }
+})
+
+// demo request by jQuery XHR
+$.ajax('/api/test', {
+  method: 'get',
+  success(res) {
+    console.log(res);
+  },
+})
+```
+
 
 ## Methods
 there are 4 main methods in remockjs

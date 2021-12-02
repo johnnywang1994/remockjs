@@ -5,15 +5,8 @@ import { terser } from "rollup-plugin-terser";
 
 const isProd = process.env.NODE_ENV === 'production';
 
-const config = {
+const baseConfig = {
   input: 'src/index.js',
-  output: {
-    name: 'ReMock',
-    file: `dist/remock${isProd ? '.min' : ''}.js`,
-    format: 'umd',
-    // exports: 'default',
-    compact: isProd
-  },
   plugins: [
     babel({ babelHelpers: 'bundled' }),
     (isProd && terser()),
@@ -22,4 +15,32 @@ const config = {
   ],
 };
 
-export default config;
+const umdConfig = Object.assign({}, baseConfig, {
+  output: {
+    name: 'ReMock',
+    file: `dist/remock${isProd ? '.min' : ''}.js`,
+    format: 'umd',
+    // exports: 'default',
+    compact: isProd
+  },
+});
+
+const cjsConfig = Object.assign({}, baseConfig, {
+  output: {
+    file: `dist/remock${isProd ? '.cjs.min' : '.cjs'}.js`,
+    format: 'cjs',
+    // exports: 'default',
+    compact: isProd
+  },
+});
+
+const esmConfig = Object.assign({}, baseConfig, {
+  output: {
+    file: `dist/remock${isProd ? '.esm.min' : '.esm'}.js`,
+    format: 'es',
+    // exports: 'default',
+    compact: isProd
+  },
+});
+
+export default [umdConfig, cjsConfig, esmConfig];

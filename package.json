@@ -3,8 +3,10 @@
   "version": "0.0.7",
   "author": "johnnywang",
   "description": "ReMock.js is a simulation data generator which is reproduced from [Mock.js](https://github.com/nuysoft/Mock)",
-  "main": "./dist/remock.min.js",
-  "module": "./dist/remock.min.js",
+  "main": "dist/remock.cjs.min.js",
+  "module": "dist/remock.esm.min.js",
+  "unpkg": "dist/remock.min.js",
+  "jsdelivr": "dist/remock.min.js",
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development rollup --config rollup.config.js -w",

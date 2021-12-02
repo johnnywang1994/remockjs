@@ -3,7 +3,7 @@
   "version": "0.0.9",
   "author": "johnnywang",
   "description": "ReMock.js is a simulation data generator which is reproduced from [Mock.js](https://github.com/nuysoft/Mock)",
-  "main": "dist/remock.cjs.min.js",
+  "main": "src/index.js",
   "module": "dist/remock.esm.min.js",
   "unpkg": "dist/remock.min.js",
   "jsdelivr": "dist/remock.min.js",

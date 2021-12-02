@@ -1,6 +1,6 @@
 {
   "name": "remockjs",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "author": "johnnywang",
   "description": "ReMock.js is a simulation data generator which is reproduced from [Mock.js](https://github.com/nuysoft/Mock)",
   "main": "src/index.js",

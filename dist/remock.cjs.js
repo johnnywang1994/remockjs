@@ -2980,7 +2980,7 @@ function parseKeySchema(output, key, value) {
 
 
 function createData(dataSchema) {
-  if (_typeof(dataSchema) !== 'object' || Array.isArray(dataSchema)) {
+  if (!dataSchema || _typeof(dataSchema) !== 'object' || Array.isArray(dataSchema)) {
     return parseValueSchema(dataSchema);
   }
 

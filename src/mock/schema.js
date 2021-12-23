@@ -165,7 +165,7 @@ function parseKeySchema(output, key, value) {
  * @param {*} dataSchema 
  */
 function createData(dataSchema) {
-  if (typeof dataSchema !== 'object' || Array.isArray(dataSchema)) {
+  if (!dataSchema || typeof dataSchema !== 'object' || Array.isArray(dataSchema)) {
     return parseValueSchema(dataSchema);
   }
 

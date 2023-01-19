@@ -30,6 +30,7 @@
   "bugs": {
     "url": "https://github.com/johnnywang1994/remockjs/issues"
   },
+  "types": "index.d.ts",
   "keywords": [
     "mockjs",
     "remockjs",

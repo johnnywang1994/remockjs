@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://npmcharts.com/compare/remockjs?minimal=true"><img src="https://img.shields.io/npm/dm/remockjs.svg?sanitize=true" alt="Downloads"></a>
+  <a href="https://www.npmjs.com/package/remockjs"><img src="https://img.shields.io/npm/v/remockjs.svg?sanitize=true" alt="Version"></a>
+  <a href="https://www.npmjs.com/package/remockjs"><img src="https://img.shields.io/npm/l/remockjs.svg?sanitize=true" alt="License"></a>
+</p>
+
 # ReMock.js
 
 ReMock.js is a simulation data generator which is reproduced from [Mock.js](https://github.com/nuysoft/Mock), with some difference on data schema & parsing, also fixed some issues in Mockjs.
@@ -20,7 +26,7 @@ $ npm install remockjs
 or by CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/remockjs@0.0.7/dist/remock.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/remockjs@latest/dist/remock.min.js"></script>
 ```
 
 ```js
